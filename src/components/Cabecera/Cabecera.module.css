@@ -1,0 +1,58 @@
+.cabecera {
+  background-color: #f0f4f8;
+  padding: 1rem;
+  border-bottom: 2px solid #ccc;
+}
+
+.filaSuperior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.identificacion {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.identificacion img {
+  width: 60px;
+  height: 60px;
+}
+
+.filaInferior {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.seleccion,
+.opciones,
+.ocupacion {
+  flex: 1;
+  min-width: 200px;
+}
+
+.opciones button {
+  margin-right: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.opciones button:hover {
+  background-color: #005fa3;
+}
+
+@media (max-width: 600px) {
+  .filaInferior {
+    flex-direction: column;
+  }
+}

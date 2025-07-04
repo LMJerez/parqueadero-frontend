@@ -1,0 +1,20 @@
+.placa {
+  background-color: #fdd835;
+  color: black;
+  font-weight: bold;
+  border: 2px solid black;
+  border-radius: 4px;
+  font-family: "Courier New", monospace;
+  display: inline-block;
+  text-align: center;
+}
+
+.pequena {
+  font-size: 0.9rem;
+  padding: 0.3rem 0.6rem;
+}
+
+.grande {
+  font-size: 1.3rem;
+  padding: 0.6rem 1rem;
+}
