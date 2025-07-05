@@ -3,25 +3,24 @@ import styles from "./Parqueadero.module.css";
 import TipoPlaza from "../TipoPlaza/TipoPlaza";
 import axios from "axios";
 
-export default function Parqueadero({ onSelectPlaza }) {
+export default function Parqueadero({ onSelectPlaza, recargar }) {
   const [plazas, setPlazas] = useState([]);
   const [agrupadas, setAgrupadas] = useState({});
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/plazas/disponibles")
+      .get("http://localhost:4000/api/plazas/completo")
       .then((res) => {
         setPlazas(res.data);
       })
       .catch((err) => {
         console.error("Error al obtener plazas:", err);
       });
-  }, []);
+  }, [recargar]); // 🔁 Se recarga cuando cambia el estado recargar
 
   useEffect(() => {
-    // Agrupar plazas por tipo_vehiculo
     const agrupado = plazas.reduce((acc, plaza) => {
-      const tipo = plaza.tipo_vehiculo;
+      const tipo = plaza.tipoVehiculo;
       if (!acc[tipo]) acc[tipo] = [];
       acc[tipo].push(plaza);
       return acc;

@@ -1,36 +1,107 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Cabecera.module.css";
-import logo from "/logo.svg"; // Este archivo debe estar en /public/
+import Placa from "../Placa/Placa";
 
-export default function Cabecera({ plazaSeleccionada, resumen }) {
-  return (
-    <div className={styles.cabecera}>
-      <div className={styles.filaSuperior}>
+export default function Cabecera({
+  plazaSeleccionada,
+  onMostrarModalEntrada,
+  onRegistrarSalida,
+}) {
+  const [tiempoTranscurrido, setTiempoTranscurrido] = useState("00:00:00");
+  const [costoEstimado, setCostoEstimado] = useState(0);
+
+  useEffect(() => {
+    let intervalo;
+
+    if (plazaSeleccionada?.ocupada && plazaSeleccionada.parqueoActivo) {
+      const calcular = () => {
+        const horaInicio = new Date(plazaSeleccionada.parqueoActivo.horaInicio);
+        const ahora = new Date();
+        const segundos = Math.floor((ahora - horaInicio) / 1000);
+
+        const horas = String(Math.floor(segundos / 3600)).padStart(2, "0");
+        const minutos = String(Math.floor((segundos % 3600) / 60)).padStart(
+          2,
+          "0"
+        );
+        const segundosRest = String(segundos % 60).padStart(2, "0");
+
+        setTiempoTranscurrido(`${horas}:${minutos}:${segundosRest}`);
+
+        const minutosTotales = Math.ceil((ahora - horaInicio) / 60000);
+        setCostoEstimado(minutosTotales * plazaSeleccionada.valorMinuto);
+      };
+
+      calcular();
+      intervalo = setInterval(calcular, 1000);
+    } else {
+      setTiempoTranscurrido("00:00:00");
+      setCostoEstimado(0);
+    }
+
+    return () => clearInterval(intervalo);
+  }, [plazaSeleccionada]);
+
+  if (!plazaSeleccionada) {
+    return (
+      <header className={styles.cabecera}>
         <div className={styles.identificacion}>
-          <img src={logo} alt="Logo parqueadero" />
-          <div>
-            <h1>Parqueadero FESC</h1>
-            <p>Desarrollado por Luis Mario Jerez + ChatGPT</p>
-          </div>
+          <img src="/logo.svg" alt="Logo" className={styles.logo} />
+          <h1>Parqueadero Misión 3</h1>
+          <span>Desarrollado por Luis Mario Jerez</span>
         </div>
+      </header>
+    );
+  }
+
+  // ✅ Más legible con constante
+  const estaOcupada = Boolean(plazaSeleccionada.ocupada);
+
+  return (
+    <header className={styles.cabecera}>
+      <div className={styles.identificacion}>
+        <img src="/logo.svg" alt="Logo" className={styles.logo} />
+        <h1>Parqueadero Misión 3</h1>
+        <span>Desarrollado por Luis Mario Jerez</span>
       </div>
 
-      <div className={styles.filaInferior}>
-        <div className={styles.seleccion}>
-          <strong>Plaza seleccionada:</strong> {plazaSeleccionada ?? "Ninguna"}
-        </div>
-
-        <div className={styles.opciones}>
-          <button>Registrar ingreso</button>
-          <button>Registrar salida</button>
-        </div>
-
-        <div className={styles.ocupacion}>
-          <strong>Carros:</strong> {resumen?.carros ?? "0/0"}
-          <br />
-          <strong>Motos:</strong> {resumen?.motos ?? "0/0"}
-        </div>
+      <div className={styles.detalles}>
+        <h2>Plaza Seleccionada: {plazaSeleccionada.nombre}</h2>
+        {estaOcupada ? (
+          <>
+            <Placa
+              valor={plazaSeleccionada.parqueoActivo.placa}
+              size="grande"
+            />
+            <p>
+              Hora ingreso:{" "}
+              {new Date(
+                plazaSeleccionada.parqueoActivo.horaInicio
+              ).toLocaleTimeString()}
+            </p>
+            <p>Tiempo transcurrido: {tiempoTranscurrido}</p>
+            <p>Costo estimado: ${costoEstimado}</p>
+          </>
+        ) : (
+          <p>Plaza libre. Puede registrar un nuevo ingreso.</p>
+        )}
       </div>
-    </div>
+
+      <div className={styles.acciones}>
+        <button
+          onClick={onMostrarModalEntrada}
+          disabled={estaOcupada} // ✅ Solo si NO está ocupada se activa
+        >
+          Registrar entrada
+        </button>
+        <button
+          className={styles.btnSalida}
+          onClick={() => onRegistrarSalida(plazaSeleccionada)}
+          disabled={!estaOcupada}
+        >
+          Registrar salida
+        </button>
+      </div>
+    </header>
   );
 }

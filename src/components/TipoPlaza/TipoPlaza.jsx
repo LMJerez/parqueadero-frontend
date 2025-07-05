@@ -9,7 +9,7 @@ export default function TipoPlaza({ tipo, plazas, onSelectPlaza }) {
       <div className={styles.grid}>
         {plazas.map((plaza) => (
           <Plaza
-            key={plaza.id_plaza}
+            key={plaza.id} // ✅ antes era plaza.id_plaza
             plaza={plaza}
             onSelect={() => onSelectPlaza(plaza)}
           />

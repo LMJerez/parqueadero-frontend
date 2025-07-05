@@ -1,3 +1,10 @@
+/* === RESET BÁSICO === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* === HTML y BODY === */
 html {
   font-size: 16px;

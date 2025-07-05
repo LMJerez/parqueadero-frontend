@@ -3,19 +3,25 @@ import styles from "./Plaza.module.css";
 import Placa from "../Placa/Placa";
 
 export default function Plaza({ plaza, onSelect }) {
-  const ocupada = plaza.plaza_ocupada;
+  const ocupada = plaza.ocupada;
+  const placa = plaza.parqueoActivo?.placa || "";
+
+  const handleClick = () => {
+    // Siempre permitimos seleccionar, la lógica de entrada/salida se controla externamente
+    onSelect(plaza);
+  };
 
   return (
     <div
       className={`${styles.plaza} ${ocupada ? styles.ocupada : styles.libre}`}
-      onClick={() => onSelect(plaza)}
-      title={ocupada ? `Ocupada - ${plaza.placa_vehiculo}` : "Disponible"}
+      onClick={handleClick}
+      title={ocupada ? `Ocupada - ${placa}` : "Disponible"}
     >
-      <div className={styles.nombre}>{plaza.nombre_plaza}</div>
+      <div className={styles.nombre}>{plaza.nombre}</div>
 
       <div className={styles.estado}>
         {ocupada ? (
-          <Placa valor={plaza.placa_vehiculo} />
+          <Placa valor={placa} />
         ) : (
           <span className={styles.check}>✅</span>
         )}

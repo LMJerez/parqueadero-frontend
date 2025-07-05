@@ -1,12 +1,13 @@
 .placa {
-  background-color: #fdd835;
-  color: black;
-  font-weight: bold;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.2rem;
+  background-color: #ffeb3b;
   border: 2px solid black;
+  padding: 0.3rem 0.6rem;
   border-radius: 4px;
-  font-family: "Courier New", monospace;
   display: inline-block;
   text-align: center;
+  letter-spacing: 1px;
 }
 
 .pequena {

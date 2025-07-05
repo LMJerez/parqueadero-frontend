@@ -1,14 +1,10 @@
 .cabecera {
-  background-color: #f0f4f8;
-  padding: 1rem;
-  border-bottom: 2px solid #ccc;
-}
-
-.filaSuperior {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-bottom: 2px solid #ddd;
 }
 
 .identificacion {
@@ -17,42 +13,48 @@
   gap: 1rem;
 }
 
-.identificacion img {
-  width: 60px;
-  height: 60px;
+.logo {
+  width: 50px;
+  height: auto;
 }
 
-.filaInferior {
+.detalles {
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.acciones {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 1rem;
   gap: 1rem;
+  justify-content: flex-start;
 }
 
-.seleccion,
-.opciones,
-.ocupacion {
-  flex: 1;
-  min-width: 200px;
-}
-
-.opciones button {
-  margin-right: 0.5rem;
-  padding: 0.5rem 1rem;
-  background-color: #0077cc;
+.btnEntrada {
+  background-color: #28a745;
   color: white;
+  padding: 0.5rem 1rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
-.opciones button:hover {
-  background-color: #005fa3;
+.btnEntrada:disabled {
+  background-color: #a1d9a1;
+  cursor: not-allowed;
 }
 
-@media (max-width: 600px) {
-  .filaInferior {
-    flex-direction: column;
-  }
+.btnSalida {
+  background-color: #dc3545;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btnSalida:disabled {
+  background-color: #f4a3a3;
+  cursor: not-allowed;
 }
