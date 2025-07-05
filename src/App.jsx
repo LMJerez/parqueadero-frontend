@@ -7,11 +7,15 @@ import ModalEntrada from "./components/ModalEntrada/ModalEntrada";
 function App() {
   const [plazaSeleccionada, setPlazaSeleccionada] = useState(null);
   const [modalEntradaVisible, setModalEntradaVisible] = useState(false);
-  const [recargarPlazas, setRecargarPlazas] = useState(false); // 🔁 trigger para actualizar plazas
+  const [recargarPlazas, setRecargarPlazas] = useState(false);
 
   const handleSelectPlaza = (plaza) => {
     setPlazaSeleccionada(plaza);
-    if (!plaza.ocupada) {
+    // NO abrir modal aquí — solo desde el botón
+  };
+
+  const handleMostrarModalEntrada = () => {
+    if (plazaSeleccionada && !plazaSeleccionada.ocupada) {
       setModalEntradaVisible(true);
     }
   };
@@ -25,7 +29,7 @@ function App() {
 
       setModalEntradaVisible(false);
       setPlazaSeleccionada(null);
-      setRecargarPlazas(!recargarPlazas); // 🔁 forzar actualización
+      setRecargarPlazas(!recargarPlazas);
     } catch (err) {
       console.error("Error al registrar entrada:", err);
       alert("Hubo un error al registrar la entrada.");
@@ -47,7 +51,7 @@ function App() {
       );
 
       setPlazaSeleccionada(null);
-      setRecargarPlazas(!recargarPlazas); // 🔁 recarga
+      setRecargarPlazas(!recargarPlazas);
     } catch (err) {
       console.error("Error al registrar salida:", err);
       alert("Hubo un error al registrar la salida.");
@@ -58,7 +62,7 @@ function App() {
     <>
       <Cabecera
         plazaSeleccionada={plazaSeleccionada}
-        onRegistrarEntrada={(plaza) => setModalEntradaVisible(true)}
+        onMostrarModalEntrada={handleMostrarModalEntrada} // ✅ nombre correcto
         onRegistrarSalida={handleRegistrarSalida}
       />
       <Parqueadero

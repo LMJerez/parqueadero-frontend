@@ -54,7 +54,6 @@ export default function Cabecera({
     );
   }
 
-  // ✅ Más legible con constante
   const estaOcupada = Boolean(plazaSeleccionada.ocupada);
 
   return (
@@ -88,12 +87,10 @@ export default function Cabecera({
       </div>
 
       <div className={styles.acciones}>
-        <button
-          onClick={onMostrarModalEntrada}
-          disabled={estaOcupada} // ✅ Solo si NO está ocupada se activa
-        >
+        <button onClick={onMostrarModalEntrada} disabled={estaOcupada}>
           Registrar entrada
         </button>
+
         <button
           className={styles.btnSalida}
           onClick={() => onRegistrarSalida(plazaSeleccionada)}
