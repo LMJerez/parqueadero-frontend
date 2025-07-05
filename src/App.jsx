@@ -7,19 +7,15 @@ import ModalEntrada from "./components/ModalEntrada/ModalEntrada";
 function App() {
   const [plazaSeleccionada, setPlazaSeleccionada] = useState(null);
   const [modalEntradaVisible, setModalEntradaVisible] = useState(false);
-  const [recargarPlazas, setRecargarPlazas] = useState(false);
+  const [recargarPlazas, setRecargarPlazas] = useState(false); // 🔁 trigger para actualizar plazas
 
+  // Al hacer clic en cualquier plaza: solo seleccionarla
   const handleSelectPlaza = (plaza) => {
     setPlazaSeleccionada(plaza);
-    // NO abrir modal aquí — solo desde el botón
+    // ❌ NO mostrar modal aquí
   };
 
-  const handleMostrarModalEntrada = () => {
-    if (plazaSeleccionada && !plazaSeleccionada.ocupada) {
-      setModalEntradaVisible(true);
-    }
-  };
-
+  // POST: Registro de ingreso
   const handleRegistrarEntrada = async (plaza, placa) => {
     try {
       await axios.post("http://localhost:4000/api/parqueo/ingreso", {
@@ -36,6 +32,7 @@ function App() {
     }
   };
 
+  // POST: Registro de salida
   const handleRegistrarSalida = async (plaza) => {
     try {
       const parqueoId = plaza.parqueoActivo?.id;
@@ -62,7 +59,7 @@ function App() {
     <>
       <Cabecera
         plazaSeleccionada={plazaSeleccionada}
-        onMostrarModalEntrada={handleMostrarModalEntrada} // ✅ nombre correcto
+        onMostrarModalEntrada={() => setModalEntradaVisible(true)}
         onRegistrarSalida={handleRegistrarSalida}
       />
       <Parqueadero

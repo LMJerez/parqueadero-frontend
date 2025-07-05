@@ -54,7 +54,7 @@ export default function Cabecera({
     );
   }
 
-  const estaOcupada = Boolean(plazaSeleccionada.ocupada);
+  const estaOcupada = plazaSeleccionada.ocupada;
 
   return (
     <header className={styles.cabecera}>
@@ -87,14 +87,17 @@ export default function Cabecera({
       </div>
 
       <div className={styles.acciones}>
-        <button onClick={onMostrarModalEntrada} disabled={estaOcupada}>
+        <button
+          onClick={onMostrarModalEntrada}
+          disabled={!plazaSeleccionada || plazaSeleccionada.ocupada}
+        >
           Registrar entrada
         </button>
 
         <button
           className={styles.btnSalida}
           onClick={() => onRegistrarSalida(plazaSeleccionada)}
-          disabled={!estaOcupada}
+          disabled={!plazaSeleccionada || !plazaSeleccionada.ocupada}
         >
           Registrar salida
         </button>
