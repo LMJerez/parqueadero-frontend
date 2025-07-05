@@ -9,7 +9,7 @@ export default function Parqueadero({ onSelectPlaza, recargar }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/plazas/completo")
+      .get("https://backend-au4b.onrender.com/api/plazas/completo")
       .then((res) => {
         setPlazas(res.data);
       })

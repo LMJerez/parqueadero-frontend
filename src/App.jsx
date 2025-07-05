@@ -18,10 +18,13 @@ function App() {
   // POST: Registro de ingreso
   const handleRegistrarEntrada = async (plaza, placa) => {
     try {
-      await axios.post("http://localhost:4000/api/parqueo/ingreso", {
-        plazaId: plaza.id,
-        placa,
-      });
+      await axios.post(
+        "https://backend-au4b.onrender.com/api/parqueo/ingreso",
+        {
+          plazaId: plaza.id,
+          placa,
+        }
+      );
 
       setModalEntradaVisible(false);
       setPlazaSeleccionada(null);
@@ -38,9 +41,12 @@ function App() {
       const parqueoId = plaza.parqueoActivo?.id;
       if (!parqueoId) return;
 
-      const res = await axios.post("http://localhost:4000/api/parqueo/salida", {
-        parqueoId,
-      });
+      const res = await axios.post(
+        "https://backend-au4b.onrender.com/api/parqueo/salida",
+        {
+          parqueoId,
+        }
+      );
 
       alert(
         `Vehículo con placa ${plaza.parqueoActivo.placa} ha salido.\n` +
